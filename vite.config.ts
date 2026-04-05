@@ -22,6 +22,12 @@ const sourceURLInserter = (): Plugin => ({
 });
 export default defineConfig({
   base: './',
+  resolve: {
+    alias: {
+      '@core': path.resolve(__dirname, './src/core'),
+      '@components': path.resolve(__dirname, './src/components'),
+    },
+  },
   plugins: [{
     name: 'configure-for-uxp',
     transformIndexHtml(html) {
