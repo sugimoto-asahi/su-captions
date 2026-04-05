@@ -1,0 +1,17 @@
+{
+  "name": "su-captions",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "tsc && vite build"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.0"
+  },
+  "dependencies": {
+    "@adobe/cc-ext-uxp-types": "^7.3.1"
+  }
+}

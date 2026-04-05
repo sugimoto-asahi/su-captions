@@ -1,0 +1,28 @@
+{
+  "id": "com.su.captions",
+  "name": "su-captions",
+  "version": "1.0.0",
+  "main": "index.html",
+  "manifestVersion": 5,
+  "host": [
+    {
+      "app": "premierepro",
+      "minVersion": "26.0.0"
+    }
+  ],
+  "entrypoints": [
+    {
+      "type": "panel",
+      "id": "suCaptionsPanel",
+      "label": "Captions",
+      "minimumSize": {"width": 300, "height": 400},
+      "maximumSize": {"width": 1000, "height": 1000}
+    }
+  ],
+  "requiredPermissions": {
+    "localFileSystem": "fullAccess",
+    "network": {
+      "domains": "all"
+    }
+  }
+}
