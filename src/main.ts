@@ -1,11 +1,6 @@
-import {hello} from "./test";
+import "@swc-uxp-internal/icons-workflow/icons/sp-icon-add-circle"
 
-// Global object.
 const ppro = require("premierepro");
-
-hello("hello");
-
-const uxp = require("uxp");
 
 // Call the Premiere Pro API to populate Application Info area.
 async function populateProjectInfo() {

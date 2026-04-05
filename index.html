@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script type="module" src="./src/main.ts"></script>
-    <link rel="stylesheet" href="./src/style.css" />
-  </head>
-  <body>
+
+<head>
+  <script type="module" src="./src/main.ts"></script>
+  <link rel="stylesheet" href="./src/style.css" />
+</head>
+
+<body>
+  <sp-theme>
     <h4 id="plugin-heading">Application Info</h4>
     <div class="main-div">
-      <div id="plugin-body"> </div>
+      <div id="plugin-body">
+        <sp-icon-add-circle width="10" height="10"></sp-icon-add-circle>
+      </div>
     </div>
-    <footer>
-      <button id="btnPopulate">Populate Application Info</button>
-      <button id="clear-btn">Clear Application Info</button>
-    </footer>
-  </body>
+  </sp-theme>
+  <footer>
+    <button id="btnPopulate">Populate Application Info</button>
+    <button id="clear-btn">Clear Application Info</button>
+  </footer>
+</body>
+
 </html>
