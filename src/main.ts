@@ -1,4 +1,5 @@
 import "@swc-uxp-internal/icons-workflow/icons/sp-icon-add-circle"
+import "@components/su-table-column"
 
 const ppro = require("premierepro");
 

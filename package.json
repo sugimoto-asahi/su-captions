@@ -8,8 +8,10 @@
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
+    "@types/ws": "^8.18.1",
     "typescript": "^5.2.2",
-    "vite": "^5.0.0"
+    "vite": "^5.0.0",
+    "ws": "^8.20.0"
   },
   "dependencies": {
     "@adobe/cc-ext-uxp-types": "^7.3.1",
