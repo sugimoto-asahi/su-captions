@@ -1,6 +1,6 @@
-import fs from 'fs';
 import path from 'path';
 import http from 'http';
+import fs from 'fs';
 import { defineConfig, Plugin } from 'vite';
 import { WebSocketServer, WebSocket } from 'ws';
 
@@ -54,21 +54,15 @@ const hotReload = (): Plugin => {
     // the top of the entry point of the program.
     // This ideally results in the code being the first thing that executes
     // when the plugin loads.
-    writeBundle(options, bundle) {
+    outputOptions(options) {
+      if (!this.meta.watchMode) return null;
+      return { ...options, banner: (chunk) => chunk.isEntry ? wsClientSnippet : '' };
+    },
+
+    // Broadcast reload to all connected UXP panels
+    writeBundle() {
       if (!this.meta.watchMode) return;
 
-      const outDir = options.dir ?? 'dist';
-      for (const fileName of Object.keys(bundle)) {
-        const chunk = bundle[fileName];
-        // inject the websocket snippet to the start of index.js
-        if (chunk.type === 'chunk' && chunk.isEntry) {
-          const filePath = path.resolve(outDir, fileName);
-          const existing = fs.readFileSync(filePath, 'utf-8');
-          fs.writeFileSync(filePath, wsClientSnippet + existing);
-        }
-      }
-
-      // Broadcast reload to all connected UXP panels
       for (const client of clients) {
         if (client.readyState === WebSocket.OPEN) {
           client.send('reload');
@@ -84,17 +78,26 @@ const hotReload = (): Plugin => {
 // and sourceMappingURL will not resolve properly.
 const sourceURLInserter = (): Plugin => ({
   name: 'source-url-inserter',
-  enforce: 'post',
   writeBundle(options, bundle) {
-    const outDir = options.dir ?? 'dist';
-    for (const fileName in bundle) {
-      const chunk = bundle[fileName];
-      if (chunk.type === 'chunk') {
-        const filePath = path.resolve(outDir, fileName);
-        fs.appendFileSync(filePath, `\n//# sourceURL=uxp:///${fileName}`);
+    const outDir = options.dir ?? path.dirname(options.file ?? '');
+
+    for (const [fileName, chunk] of Object.entries(bundle)) {
+      if (chunk.type !== 'chunk') continue;
+
+      const filePath = path.join(outDir, fileName);
+      let code = fs.readFileSync(filePath, 'utf-8');
+      const sourceURL = `\n//# sourceURL=uxp:///${fileName}`;
+
+      // Insert immediately before sourceMappingURL so ordering is correct
+      if (code.includes('//# sourceMappingURL=')) {
+        code = code.replace('//# sourceMappingURL=', `${sourceURL}\n//# sourceMappingURL=`);
+      } else {
+        code += sourceURL;
       }
+
+      fs.writeFileSync(filePath, code, 'utf-8');
     }
-  },
+  }
 });
 
 export default defineConfig({
