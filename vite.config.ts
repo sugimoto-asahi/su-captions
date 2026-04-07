@@ -14,6 +14,7 @@ const wsClientSnippet = [
   `    var ws = new WebSocket("ws://localhost:${HOT_RELOAD_PORT}");`,
   '    ws.onmessage = function(event) { ',
   '        if (event.data === "reload") {',
+  '            console.clear();',
   '            location.reload();',
   '        }',
   '    };',
