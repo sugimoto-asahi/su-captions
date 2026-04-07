@@ -54,21 +54,16 @@ const hotReload = (): Plugin => {
     // the top of the entry point of the program.
     // This ideally results in the code being the first thing that executes
     // when the plugin loads.
-    writeBundle(options, bundle) {
+    renderChunk(code, chunk) {
+      if (!this.meta.watchMode) return null;
+      if (!chunk.isEntry) return null;
+      return { code: wsClientSnippet + '\n' + code, map: null };
+    },
+
+    // Broadcast reload to all connected UXP panels
+    writeBundle() {
       if (!this.meta.watchMode) return;
 
-      const outDir = options.dir ?? 'dist';
-      for (const fileName of Object.keys(bundle)) {
-        const chunk = bundle[fileName];
-        // inject the websocket snippet to the start of index.js
-        if (chunk.type === 'chunk' && chunk.isEntry) {
-          const filePath = path.resolve(outDir, fileName);
-          const existing = fs.readFileSync(filePath, 'utf-8');
-          fs.writeFileSync(filePath, wsClientSnippet + existing);
-        }
-      }
-
-      // Broadcast reload to all connected UXP panels
       for (const client of clients) {
         if (client.readyState === WebSocket.OPEN) {
           client.send('reload');
