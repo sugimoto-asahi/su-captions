@@ -6,11 +6,13 @@ import "@swc-uxp-internal/theme/sp-theme.js"
 import "@swc-uxp-internal/theme/theme-dark.js"
 import "@swc-uxp-internal/theme/scale-medium.js"
 
-const ppro = require("premierepro");
 
-// Call the Premiere Pro API to populate Application Info area.
-async function populateProjectInfo() {
-  // Get the active project.
+import { storage, entrypoints } from "uxp"
+
+import type { premierepro } from "@localTypes/premierepro";
+const ppro = require("premierepro") as premierepro;
+
+const fs = storage.localFileSystem;
   const project = await ppro.Project.getActiveProject();
   if (!project) {
     log("There is no active project found", "red");
