@@ -29,17 +29,24 @@ export function SuElement(styles: string) {
   abstract class SuElementBase extends HTMLElement {
     /**
      * Lifecycle callback
+     * We attach a shadow DOM and add the HTML to it.
+     * The HTML is provided by the user via implementing template().
      */
     connectedCallback() {
       this.attachShadow({ mode: 'open' });
-      this.shadowRoot!.innerHTML = htmlStyles + this.render();
+      this.shadowRoot!.innerHTML = htmlStyles + this.template();
+      this.then();
     }
 
     /**
      * Render the HTML
      * @return HTML string to be rendered
      */
-    abstract render(): string;
+    abstract template(): string;
+
+    then(): void {
+      return;
+    }
   };
 
   return SuElementBase

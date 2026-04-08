@@ -1,6 +1,4 @@
 :host {
     display: flex;
-}
-
-.main {
+    flex: 0 0 auto;
 }
