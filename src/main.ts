@@ -13,26 +13,38 @@ import type { premierepro } from "@localTypes/premierepro";
 const ppro = require("premierepro") as premierepro;
 
 const fs = storage.localFileSystem;
-  const project = await ppro.Project.getActiveProject();
-  if (!project) {
-    log("There is no active project found", "red");
-  } else {
-    log(`Active project: ${project.name}`);
-    // Get the active sequence.
-    const sequence = await project.getActiveSequence();
-    const time = await sequence.getInPoint();
-    log("In point is " + time.seconds);
-    if (!sequence) {
-      log("There is no active sequence found", "red");
-    } else {
-      log(`Active sequence: ${sequence.name}`);
-    }
-  }
-}
 
-// Log function to display messages in the plugin body.
-function log(msg: string | number, color?: string) {
-  document.getElementById("plugin-body")!.innerHTML += color
-    ? `<span style='color:${color}'>${msg}</span><br />`
-    : `${msg}<br />`;
-}
+const loadCaptionFileHandler = async (e: Event) => {
+  const project = await ppro.Project.getActiveProject();
+  // open the caption file picker at the project directory
+  // const projectFile = await fs.getEntryWithUrl("C:/Users/juayh/Dev/su-captions/");
+
+  // remove long path prefix '\\?\'
+  const projectPath = project.path.slice(4);
+  const projectDirectory = window.path.dirname(projectPath);
+  console.log(projectPath);
+  console.log(projectDirectory);
+
+  const projectFolder = await fs.getEntryWithUrl(projectDirectory);
+  // open the caption file picker at the project directory
+  const options = {
+    types: [
+      "su"
+    ],
+    initialLocation: projectFolder,
+    allowMultiple: false
+  }
+  try {
+    const captionFile = await fs.getFileForOpening(options);
+  }
+  catch (error) {
+    console.log(error);
+  }
+};
+
+entrypoints.setup({
+  commands: {
+    // @ts-ignore
+    loadCaptionFile: loadCaptionFileHandler
+  }
+})
