@@ -16,10 +16,15 @@
   "entrypoints": [
     {
       "type": "panel",
-      "id": "suCaptionsPanel",
+      "id": "mainPanel",
       "label": "Captions",
       "minimumSize": {"width": 300, "height": 400},
       "maximumSize": {"width": 1000, "height": 1000}
+    },
+    {
+      "type": "command",
+      "id": "loadCaptionFile",
+      "label": "Load caption file"
     }
   ],
   "requiredPermissions": {

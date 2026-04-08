@@ -106,6 +106,7 @@ export default defineConfig({
     alias: {
       '@core': path.resolve(__dirname, './src/core'),
       '@components': path.resolve(__dirname, './src/components'),
+      '@localTypes': path.resolve(__dirname, './src/types')
     },
   },
   plugins: [
@@ -120,6 +121,7 @@ export default defineConfig({
   ],
   build: {
     outDir: 'dist',
+    minify: false,
     sourcemap: 'inline',
     modulePreload: false, // Prevent polyfills
     rollupOptions: {
@@ -130,7 +132,11 @@ export default defineConfig({
         entryFileNames: `assets/[name].js`,
         chunkFileNames: `assets/[name].js`,
         assetFileNames: `assets/[name].[ext]`
-      }
+      },
+      external: [
+        "uxp",
+        "premierepro"
+      ]
     },
     chunkSizeWarningLimit: 1000
   }
