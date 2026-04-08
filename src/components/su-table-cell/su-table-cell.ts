@@ -2,13 +2,23 @@ import { SuElement } from "@core/su-element";
 import styles from "./su-table-cell.css?inline";
 
 
-class SuTableCell extends SuElement(styles) {
-  override connectedCallback(): void {
-    super.connectedCallback();
+export class SuTableCell extends SuElement(styles) {
+  #element!: HTMLDivElement;
+
+  override template() {
+    return `
+    <div class="main">
+      <slot></slot>
+    </div>
+    `;
   }
 
-  override render() {
-    return `<slot></slot>`;
+  override then(): void {
+    this.#element = this.shadowRoot?.querySelector('.main') as HTMLDivElement;
+  }
+
+  setWidth(width: number) {
+    this.#element.style.width = `${width}px`;
   }
 }
 
