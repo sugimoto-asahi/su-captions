@@ -1,7 +1,7 @@
 import path from 'path';
 import http from 'http';
 import fs from 'fs';
-import { defineConfig, Plugin } from 'vite';
+import { defineConfig, Plugin } from 'vitest/config';
 import { WebSocketServer, WebSocket } from 'ws';
 
 const HOT_RELOAD_PORT = 7788;
@@ -139,5 +139,8 @@ export default defineConfig({
       ]
     },
     chunkSizeWarningLimit: 1000
+  },
+  test: {
+    globals: true,
   }
 });
