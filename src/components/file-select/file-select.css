@@ -1,0 +1,14 @@
+:host {
+    display: flex;
+}
+
+.filepath {
+    padding: var(--spectrum-spacing-100)
+}
+
+.select {
+    cursor: pointer;
+    padding: var(--spectrum-spacing-100);
+    border: var(--spectrum-border-width-100) solid var(--spectrum-neutral-subdued-content-color-default);
+    border-radius: var(--spectrum-corner-radius-medium-default);
+}
