@@ -1,6 +1,10 @@
 import { SuElement } from "@core/su-element";
 import styles from "./file-select.css?inline";
 
+import { storage } from "uxp";
+
+import { settings } from "@core/settings";
+import { ppro, ufs } from "@core/api";
 
 
 class FileSelect extends SuElement(styles) {

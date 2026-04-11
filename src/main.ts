@@ -7,13 +7,11 @@ import "@components/file-select"
 // styles
 import "@components/su-theme"
 
-
-import { storage, entrypoints } from "uxp"
-
-import type { premierepro } from "@localTypes/premierepro";
-const ppro = require("premierepro") as premierepro;
-
-const fs = storage.localFileSystem;
+import { settings } from "@core/settings";
+import { captionStore } from "@core/caption-store"
+import { ufs } from "@core/api";
+import type { storage } from "uxp";
+import type { SuTable } from "@components/su-table";
 
 const loadCaptionFileHandler = async (e: Event) => {
   const project = await ppro.Project.getActiveProject();
