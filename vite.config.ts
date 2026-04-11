@@ -142,5 +142,9 @@ export default defineConfig({
   },
   test: {
     globals: true,
+    alias: {
+      uxp: path.resolve(import.meta.dirname, "./test/mock/uxp.ts")
+    },
+    // silent: "passed-only"
   }
 });

@@ -494,7 +494,7 @@ declare module 'uxp' {
              * Note that file: scheme has limited support in UWP due to the strict [File access permissions]{@link https://learn.microsoft.com/en-us/windows/uwp/files/file-access-permissions}
              * @returns `Promise<File|Folder>` the File or Folder object for the given url
              */
-            public getEntryWithUrl(url: string): any;
+            public getEntryWithUrl(url: string): Promise<File|Folder>;
             /**
              * Returns the fs url of given entry.
              * @returns `string`
