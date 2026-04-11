@@ -7,43 +7,28 @@ import "@components/file-select"
 // styles
 import "@components/su-theme"
 
-import { settings } from "@core/settings";
+import { settings, loadSettings } from "@core/settings";
 import { captionStore } from "@core/caption-store"
 import { ufs } from "@core/api";
 import type { storage } from "uxp";
 import type { SuTable } from "@components/su-table";
 
-const loadCaptionFileHandler = async (e: Event) => {
-  const project = await ppro.Project.getActiveProject();
-  // open the caption file picker at the project directory
-  // const projectFile = await fs.getEntryWithUrl("C:/Users/juayh/Dev/su-captions/");
+const loadCaptionFileHandler = async () => {
+  const file = await ufs.getEntryWithUrl(settings.getCaptionFilepath());
+  await captionStore.init(file as storage.File);
+  const table = document.querySelector("su-table") as SuTable;
+  table.loadCaptions();
+}
 
-  // remove long path prefix '\\?\'
-  const projectPath = project.path.slice(4);
-  const projectDirectory = window.path.dirname(projectPath);
-  console.log(projectPath);
-  console.log(projectDirectory);
+(async () => {
+  await loadSettings();
 
-  const projectFolder = await fs.getEntryWithUrl(projectDirectory);
-  // open the caption file picker at the project directory
-  const options = {
-    types: [
-      "su"
-    ],
-    initialLocation: projectFolder,
-    allowMultiple: false
+  // If the settings file already has the captions filepath set,
+  // we can start loading the captions into SuTable immediately.
+  if (settings.isCaptionsFileSpecified()) {
+    loadCaptionFileHandler();
   }
-  try {
-    const captionFile = await fs.getFileForOpening(options);
-  }
-  catch (error) {
-    console.log(error);
-  }
-};
+})();
 
-entrypoints.setup({
-  commands: {
-    // @ts-ignore
-    loadCaptionFile: loadCaptionFileHandler
-  }
-})
+document.addEventListener("load-caption-file", loadCaptionFileHandler);
+
