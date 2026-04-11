@@ -2,11 +2,10 @@ import "@swc-uxp-internal/icons-workflow/icons/sp-icon-add-circle"
 import "@components/su-table"
 import "@components/su-table-row"
 import "@components/su-table-cell"
+import "@components/file-select"
 
 // styles
-import "@swc-uxp-internal/theme/sp-theme.js"
-import "@swc-uxp-internal/theme/theme-dark.js"
-import "@swc-uxp-internal/theme/scale-medium.js"
+import "@components/su-theme"
 
 
 import { storage, entrypoints } from "uxp"

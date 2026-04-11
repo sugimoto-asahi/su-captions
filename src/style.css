@@ -3,10 +3,14 @@ body {
 }
 
 .main {
-    color: var(--spectrum-gray-background-color-default);
+    color: var(--spectrum-neutral-subdued-content-color-default);
     display: flex;
     flex-direction: column;
     height: 100vh;
     width: 100vw;
     padding: var(--spectrum-alias-item-padding-m);
+<<<<<<< HEAD
+=======
+    font-size: var(--spectrum-body-size-m);
+>>>>>>> master
 }
