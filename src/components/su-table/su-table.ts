@@ -1,9 +1,13 @@
 import { SuElement } from "@core/su-element";
-import { SuTableRow } from "@components/su-table-row";
+import type { SuTableRow } from "@components/su-table-row";
 import styles from "./su-table.css?inline";
 
+import { captionStore } from "@core/caption-store"
+import type { CaptionFile } from "@core/caption-file"
+import type { Caption } from "@core/caption"
+import type { SuTableCell } from "@components/su-table-cell";
 
-class SuTable extends SuElement(styles) {
+export class SuTable extends SuElement(styles) {
   #widths!: number[];
   override connectedCallback(): void {
     super.connectedCallback();
@@ -21,23 +25,39 @@ class SuTable extends SuElement(styles) {
     `;
   }
   override then(): void {
+  }
+
+  loadCaptions(): void {
+    const captions: CaptionFile = captionStore.captionFile;
+    const tracks = captions.getTrackNames();
+    const miko = captions.getTrack("Miko");
+    const miko_captions = miko.captions;
+    miko_captions.forEach((caption) => {
+      const row = this.createRow(caption);
+      this.appendChild(row);
+    });
+  }
+
+  createRow(caption: Caption): SuTableRow {
     const row = document.createElement('su-table-row') as SuTableRow;
-    const cell1 = document.createElement('su-table-cell');
-    const cell2 = document.createElement('su-table-cell');
-    const cell3 = document.createElement('su-table-cell');
+    const id = document.createElement('su-table-cell') as SuTableCell;
+    const startTimecode = document.createElement('su-table-cell') as SuTableCell;
+    const endTimecode = document.createElement('su-table-cell') as SuTableCell;
+    const captionContent = document.createElement('su-table-cell') as SuTableCell;
 
-    cell1.textContent = '1';
-    cell2.textContent = '2';
-    cell3.textContent = '3';
+    id.textContent = "1";
+    startTimecode.textContent = caption.startTimecode.toString();
+    endTimecode.textContent = caption.endTimecode.toString();
+    captionContent.textContent = caption.content;
 
-    row.appendChild(cell1);
-    row.appendChild(cell2);
-    row.appendChild(cell3);
+    row.appendChild(id);
+    row.appendChild(startTimecode);
+    row.appendChild(endTimecode);
+    row.appendChild(captionContent);
 
-    // const table = this.shadowRoot?.querySelector(".table");
-    // table?.appendChild(row);
     this.appendChild(row);
-    row.setWidths([100, 200, 300]);
+    row.setWidths([100, 100, 100, 100])
+    return row;
   }
 }
 

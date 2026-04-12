@@ -7,9 +7,9 @@ import "@components/file-select"
 // styles
 import "@components/su-theme"
 
-import { settings, loadSettings } from "@core/settings";
+import { settings } from "@core/settings";
 import { captionStore } from "@core/caption-store"
-import { ufs } from "@core/api";
+import { ppro, ufs } from "@core/api";
 import type { storage } from "uxp";
 import type { SuTable } from "@components/su-table";
 
@@ -21,7 +21,11 @@ const loadCaptionFileHandler = async () => {
 }
 
 (async () => {
-  await loadSettings();
+  const project = await ppro.Project.getActiveProject();
+  // remove long path prefix '\\?\'
+  const projectPath = project.path.slice(4);
+  const projectDirectory = window.path.dirname(projectPath);
+  settings.initSettings(`${projectDirectory}/settings.su`);
 
   // If the settings file already has the captions filepath set,
   // we can start loading the captions into SuTable immediately.

@@ -8,22 +8,52 @@ import { ppro, ufs } from "@core/api";
 
 
 class FileSelect extends SuElement(styles) {
-
   override template(): string {
-
-    const shouldShowCaptionFilepath = true;
-
-    const filePath_TEMP = "/temp/path";
+    let filePath = "No caption file loaded";
+    const shouldShowCaptionFilepath = settings.isCaptionsFileSpecified();
+    if (shouldShowCaptionFilepath) {
+      filePath = settings.getCaptionFilepath();
+    }
 
     return `
-    ${shouldShowCaptionFilepath ? `<div class='filepath'>${filePath_TEMP}</div>` : ""}
     <div class="select">File...</div>
+    <div class='filepath'>${filePath}</div>
     <slot></slot>
     `;
   }
 
   override then(): void {
+    const selectButton = this.shadowRoot?.querySelector('.select');
 
+    selectButton?.addEventListener('click', this.clickHandler);
+
+    settings.subscribe((state) => {
+      this.shadowRoot!.querySelector('.filepath')!.textContent = state.captionFile;
+    });
+  }
+
+  async clickHandler() {
+    const project = await ppro.Project.getActiveProject();
+    // open the caption file picker at the project directory
+
+    // remove long path prefix '\\?\'
+    const projectPath = project.path.slice(4);
+    const projectDirectory = window.path.dirname(projectPath);
+
+    const projectFolder = await ufs.getEntryWithUrl(projectDirectory);
+    // open the caption file picker at the project directory
+    const options = {
+      types: ["su"],
+      initialLocation: projectFolder,
+      allowMultiple: false
+    }
+    try {
+      const captionFile: storage.File = await ufs.getFileForOpening(options);
+      settings.setCaptionFilepath((captionFile as Entry).nativePath);
+    }
+    catch (error) {
+      console.error(error);
+    }
   }
 }
 

@@ -3,7 +3,8 @@
 }
 
 .filepath {
-    padding: var(--spectrum-spacing-100)
+    padding: var(--spectrum-spacing-100);
+    font-size: var(--spectrum-body-size-s);
 }
 
 .select {
