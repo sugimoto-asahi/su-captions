@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest"
 import { Timecode } from "@core/timecode"
-import { settings } from "@core/settings"
+import { settings } from "@core/settings-store"
 
 describe("constructor()", () => {
     it("creates a new Timecode object", () => {

@@ -7,7 +7,7 @@ import "@components/file-select"
 // styles
 import "@components/su-theme"
 
-import { settings } from "@core/settings";
+import { settings } from "@core/settings-store";
 import { captionStore } from "@core/caption-store"
 import { ppro, ufs } from "@core/api";
 import type { storage } from "uxp";

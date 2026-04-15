@@ -3,7 +3,7 @@ import styles from "./file-select.css?inline";
 
 import { storage } from "uxp";
 
-import { settings } from "@core/settings";
+import { settings } from "@core/settings-store";
 import { ppro, ufs } from "@core/api";
 
 

@@ -106,11 +106,11 @@ console.log(import.meta.dirname);
 export default defineConfig({
   base: './',
   resolve: {
-    alias: {
-      '@core': path.resolve(__dirname, './src/core'),
-      '@components': path.resolve(__dirname, './src/components'),
-      '@localTypes': path.resolve(__dirname, './src/types')
-    },
+    alias: [ 
+        {find: "@core", replacement: path.resolve(import.meta.dirname, "./src/core")},
+        {find: "@components", replacement: path.resolve(import.meta.dirname, "./src/components")},
+        {find: "@localTypes", replacement: path.resolve(import.meta.dirname, "./src/types")},
+     ],
   },
   plugins: [
     hotReload(),
@@ -146,7 +146,7 @@ export default defineConfig({
   test: {
     globals: true,
     alias: [
-      { find: "@core/settings", replacement: path.resolve(import.meta.dirname, "./test/mock/settings.ts") },
+      { find: "@core/settings-store", replacement: path.resolve(import.meta.dirname, "./test/mock/settings-store.ts") },
       { find: "uxp",            replacement: path.resolve(import.meta.dirname, "./test/mock/uxp.ts") },
     ],
     // silent: "passed-only"

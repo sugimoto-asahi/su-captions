@@ -1,4 +1,4 @@
-import { settings } from "@core/settings";
+import { settings } from "@core/settings-store";
 
 export type TimecodeData = {
     hours: number;
