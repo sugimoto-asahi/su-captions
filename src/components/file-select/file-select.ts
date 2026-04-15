@@ -28,14 +28,14 @@ class FileSelect extends SuElement(styles) {
     const filePathDisplay = this.shadowRoot?.querySelector(".filepath");
 
     selectButton!.addEventListener('click', this.#clickHandler);
-    settings.subscribe((state) => {
-      filePathDisplay!.textContent = state.captionFile;
+    settings.subscribe((settings) => {
+      filePathDisplay!.textContent = settings.captionFile;
     });
   }
 
   async #clickHandler() {
-    const project = await ppro.Project.getActiveProject();
     // open the caption file picker at the project directory
+    const project = await ppro.Project.getActiveProject();
 
     // remove long path prefix '\\?\'
     const projectPath = project.path.slice(4);

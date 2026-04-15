@@ -2,12 +2,24 @@ import { storage } from "uxp";
 import Ajv from "ajv";
 import schema from "@core/captions.schema.json";
 import { CaptionFile, type CaptionFileData } from "./caption-file";
+import {Store} from "@core/store"
+
+
+export interface CaptionsData {
+    captionFile: CaptionFile | null;
+}
 
 /**
  * Global singleton store for all captions in a project.
  */
-class CaptionStore {
+class CaptionStore extends Store<CaptionsData> {
     captionFile!: CaptionFile;
+
+    constructor() {
+        super({
+            captionFile: null
+        });
+    }
 
     /**
      * Ingest a caption file and parse all caption data.
