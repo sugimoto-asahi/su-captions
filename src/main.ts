@@ -35,4 +35,3 @@ const loadCaptionFileHandler = async () => {
 })();
 
 document.addEventListener("load-caption-file", loadCaptionFileHandler);
-

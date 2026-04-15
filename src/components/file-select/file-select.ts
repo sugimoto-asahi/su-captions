@@ -8,31 +8,32 @@ import { ppro, ufs } from "@core/api";
 
 
 class FileSelect extends SuElement(styles) {
-  override template(): string {
-    let filePath = "No caption file loaded";
-    const shouldShowCaptionFilepath = settings.isCaptionsFileSpecified();
-    if (shouldShowCaptionFilepath) {
-      filePath = settings.getCaptionFilepath();
-    }
+  #filePath: string;
 
+  constructor() {
+    super();
+    this.#filePath = "No caption file set";
+  }
+
+  override template(): string {
     return `
     <div class="select">File...</div>
-    <div class='filepath'>${filePath}</div>
+    <div class='filepath'>${this.#filePath}</div>
     <slot></slot>
     `;
   }
 
   override then(): void {
-    const selectButton = this.shadowRoot?.querySelector('.select');
+    const selectButton = this.shadowRoot?.querySelector(".select");
+    const filePathDisplay = this.shadowRoot?.querySelector(".filepath");
 
-    selectButton?.addEventListener('click', this.clickHandler);
-
+    selectButton!.addEventListener('click', this.#clickHandler);
     settings.subscribe((state) => {
-      this.shadowRoot!.querySelector('.filepath')!.textContent = state.captionFile;
+      filePathDisplay!.textContent = state.captionFile;
     });
   }
 
-  async clickHandler() {
+  async #clickHandler() {
     const project = await ppro.Project.getActiveProject();
     // open the caption file picker at the project directory
 

@@ -100,6 +100,9 @@ const sourceURLInserter = (): Plugin => ({
   }
 });
 
+console.log(__dirname);
+console.log(import.meta.dirname);
+
 export default defineConfig({
   base: './',
   resolve: {
@@ -142,9 +145,10 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    alias: {
-      uxp: path.resolve(import.meta.dirname, "./test/mock/uxp.ts")
-    },
+    alias: [
+      { find: "@core/settings", replacement: path.resolve(import.meta.dirname, "./test/mock/settings.ts") },
+      { find: "uxp",            replacement: path.resolve(import.meta.dirname, "./test/mock/uxp.ts") },
+    ],
     // silent: "passed-only"
   }
 });
