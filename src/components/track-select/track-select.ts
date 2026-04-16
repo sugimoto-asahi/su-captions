@@ -2,7 +2,7 @@ import styles from "./track-select.css?inline"
 import { SuElement } from "@core/su-element";
 import { trackListStore } from "@core/track-list-store";
 import type { MenuItem } from "@components/menu-item"
-import { MenuItemClickEvent } from "@components/menu-item"
+import { TrackSelectEvent } from "@components/menu-item"
 import "@components/menu-item"
 
 import "@swc-uxp-internal/icons-workflow/icons/sp-icon-chevron-down"
@@ -38,14 +38,13 @@ export class TrackSelect extends SuElement(styles) {
 
         dropdownBox.addEventListener("click", () => {
             const boundingBox = this.getBoundingClientRect();
-            console.log("click");
             tracks.style.left = boundingBox.left + "px";
             tracks.style.top = boundingBox.bottom + "px";
             tracks.hidden = false;
         })
 
-        this.addEventListener(MenuItemClickEvent.type, (event) => {
-            const e = event as MenuItemClickEvent;
+        this.addEventListener(TrackSelectEvent.type, (event) => {
+            const e = event as TrackSelectEvent;
             current.textContent = e.detail.trackName;
             tracks.hidden = true;
         })

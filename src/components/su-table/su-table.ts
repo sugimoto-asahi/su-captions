@@ -10,10 +10,12 @@ import type { Caption } from "@core/caption"
 import type { SuTableCell } from "@components/su-table-cell";
 import { widthStore } from "@core/width-store"
 import { trackListStore } from "@core/track-list-store"
+import { TrackSelectEvent } from "@components/menu-item";
 
 
 
 export class SuTable extends SuElement(styles) {
+  private captionFile!: CaptionFile;
   private rows: SuTableRow[] = [];
   private headerRow!: SuTableRow;
 
@@ -34,7 +36,10 @@ export class SuTable extends SuElement(styles) {
 
     // Load the CaptionFile's contents
     captionStore.subscribe((store) => {
+      // save the parsed CaptionFile object locally -
+      // we will never read from the store again unless a new caption file is loaded
       if (store.captionFile) {
+        this.captionFile = store.captionFile;
         this.loadCaptions(store.captionFile);
       }
     });
@@ -46,22 +51,43 @@ export class SuTable extends SuElement(styles) {
         row.setWidths(store.widths);
       })
     });
+
+    this.addEventListener(TrackSelectEvent.type, (event) => {
+      const e = event as TrackSelectEvent;
+      e.stopPropagation();
+      this.loadTrack(e.detail.trackName);
+      widthStore.set({
+        widths: [100, 100, 100, 100]
+      });
+    })
   }
 
-  loadCaptions(captions: CaptionFile): void {
-    const tracks = captions.getTrackNames();
-    trackListStore.set({ tracks });
+  private loadTrack(trackName: string): void {
+    const track = this.captionFile.getTrack(trackName);
+    // Clear the currently rendered rows
 
-    const miko = captions.getTrack("Miko");
-    const miko_captions = miko.captions;
-    miko_captions.forEach((caption) => {
+    // Remove from dom
+    this.rows.forEach((row) => {
+      row.remove();
+    });
+    // Remove from row list
+    this.rows = [];
+
+    // Add new rows
+    track.captions.forEach((caption) => {
       const row = this.createRow(caption);
       this.appendChild(row);
       this.rows.push(row);
     });
-    widthStore.set({
-      widths: [100, 100, 100, 100]
-    });
+  }
+
+  /**
+   * Ingest a new CaptionFile object into the t
+   * @param captions Object to ingest
+   */
+  private loadCaptions(captions: CaptionFile): void {
+    const tracks = captions.getTrackNames();
+    trackListStore.set({ tracks });
   }
 
   createRow(caption: Caption): SuTableRow {

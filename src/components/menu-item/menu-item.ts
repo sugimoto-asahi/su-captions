@@ -1,15 +1,15 @@
 import { SuElement } from "@core/su-element";
 import styles from "./menu-item.css?inline";
 
-export interface MenuItemClickDetail {
+export interface TrackSelectDetail {
     trackName: string;
 }
 
-export class MenuItemClickEvent extends CustomEvent<MenuItemClickDetail> {
-    static readonly type = "menu-item-click" as const;
+export class TrackSelectEvent extends CustomEvent<TrackSelectDetail> {
+    static readonly type = "track-selected" as const;
 
-    constructor(detail: MenuItemClickDetail) {
-        super(MenuItemClickEvent.type, {
+    constructor(detail: TrackSelectDetail) {
+        super(TrackSelectEvent.type, {
             detail,
             bubbles: true,
             composed: true,
@@ -32,7 +32,7 @@ export class MenuItem extends SuElement(styles) {
         this.trackName = this.shadowRoot!.querySelector(".track-name")!;
 
         this.addEventListener("click", () => {
-            this.dispatchEvent(new MenuItemClickEvent({
+            this.dispatchEvent(new TrackSelectEvent({
                 trackName: this.trackName.textContent ?? ""
             }));
         });
