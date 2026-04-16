@@ -1,0 +1,17 @@
+:host {
+    align-self: flex-end;
+    cursor: pointer;
+}
+.dropdown-box {
+    display: flex;
+    padding: var(--spectrum-spacing-50) var(--spectrum-spacing-100) var(--spectrum-spacing-50) var(--spectrum-spacing-100);
+    border: var(--spectrum-border-width-100) solid var(--spectrum-neutral-subdued-content-color-default);
+    border-radius: var(--spectrum-corner-radius-medium-default);
+    width: var(--component-width-200);
+    justify-content: space-between;
+}
+
+.tracks {
+    position: absolute;
+    width: var(--component-width-200)
+}

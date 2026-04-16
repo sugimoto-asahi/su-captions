@@ -1,0 +1,4 @@
+:host {
+    padding: var(--spectrum-spacing-50) var(--spectrum-spacing-100) var(--spectrum-spacing-50) var(--spectrum-spacing-100);
+    border: var(--spectrum-border-width-100) solid var(--spectrum-neutral-subdued-content-color-default);
+}

@@ -1,5 +1,10 @@
 :host {
-    display: block;
+    display: flex;
+    flex-direction: column;
     border: 1px solid white;
     height: 50vh;
+    padding-top: var(--spectrum-spacing-100);
+    padding-bottom: var(--spectrum-spacing-100);
+    padding-left: var(--spectrum-spacing-200);
+    padding-right: var(--spectrum-spacing-200);
 }

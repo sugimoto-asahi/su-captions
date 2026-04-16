@@ -1,5 +1,7 @@
 import { SuElement } from "@core/su-element";
 import type { SuTableRow } from "@components/su-table-row";
+import "@components/track-select"
+
 import styles from "./su-table.css?inline";
 
 import { captionStore } from "@core/caption-store"
