@@ -1,2 +1,4 @@
 :host {
+    --component-width-100: 96px;
+    --component-width-200: 192px;
 }
