@@ -11,13 +11,10 @@ import { settings } from "@core/settings-store";
 import { captionStore } from "@core/caption-store"
 import { ppro, ufs } from "@core/api";
 import type { storage } from "uxp";
-import type { SuTable } from "@components/su-table";
 
 const loadCaptionFileHandler = async () => {
   const file = await ufs.getEntryWithUrl(settings.get().captionFile);
   await captionStore.init(file as storage.File);
-  const table = document.querySelector("su-table") as SuTable;
-  table.loadCaptions();
 }
 
 (async () => {

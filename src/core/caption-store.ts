@@ -27,7 +27,10 @@ class CaptionStore extends Store<CaptionsData> {
      * @throws {Error} if the input is not valid JSON or fails schema validation
      */
     async init(file: storage.File): Promise<void> {
-        this.captionFile = await this.#getCheckedCaptions(file);
+        const captionFile = await this.#getCheckedCaptions(file);
+        this.set({
+            captionFile: captionFile
+        });
     }
 
     /**

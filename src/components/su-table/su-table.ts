@@ -6,16 +6,19 @@ import { captionStore } from "@core/caption-store"
 import type { CaptionFile } from "@core/caption-file"
 import type { Caption } from "@core/caption"
 import type { SuTableCell } from "@components/su-table-cell";
+import { widthStore } from "@core/width-store"
+import { trackListStore } from "@core/track-list-store"
+
+
 
 export class SuTable extends SuElement(styles) {
-  #widths!: number[];
-  override connectedCallback(): void {
-    super.connectedCallback();
-  }
+  private rows: SuTableRow[] = [];
+  private headerRow!: SuTableRow;
 
   override template(): string {
     return `
-    <su-table-row>
+    <track-select></track-select>
+    <su-table-row class="header">
       <su-table-cell>Id</su-table-cell>
       <su-table-cell>Timecode Start</su-table-cell>
       <su-table-cell>Timecode End</su-table-cell>
@@ -25,16 +28,37 @@ export class SuTable extends SuElement(styles) {
     `;
   }
   override then(): void {
+    this.headerRow = this.shadowRoot!.querySelector("su-table-row.header") as SuTableRow;
+
+    // Load the CaptionFile's contents
+    captionStore.subscribe((store) => {
+      if (store.captionFile) {
+        this.loadCaptions(store.captionFile);
+      }
+    });
+
+    // Update widths of all rows in the table
+    widthStore.subscribe((store) => {
+      this.headerRow.setWidths(store.widths);
+      this.rows.forEach((row) => {
+        row.setWidths(store.widths);
+      })
+    });
   }
 
-  loadCaptions(): void {
-    const captions: CaptionFile = captionStore.captionFile;
+  loadCaptions(captions: CaptionFile): void {
     const tracks = captions.getTrackNames();
+    trackListStore.set({ tracks });
+
     const miko = captions.getTrack("Miko");
     const miko_captions = miko.captions;
     miko_captions.forEach((caption) => {
       const row = this.createRow(caption);
       this.appendChild(row);
+      this.rows.push(row);
+    });
+    widthStore.set({
+      widths: [100, 100, 100, 100]
     });
   }
 

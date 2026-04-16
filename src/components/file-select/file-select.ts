@@ -50,7 +50,9 @@ class FileSelect extends SuElement(styles) {
     }
     try {
       const captionFile: storage.File = await ufs.getFileForOpening(options);
-      settings.setCaptionFilepath((captionFile as Entry).nativePath);
+      settings.set({
+        captionFile: (captionFile as Entry).nativePath
+      })
     }
     catch (error) {
       console.error(error);
