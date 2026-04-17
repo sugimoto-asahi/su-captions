@@ -1,0 +1,11 @@
+:host {
+    cursor: grab;
+    position: absolute;
+}
+
+:host([orientation="horizontal"]) {
+    
+}
+
+:host([orientation="vertical"]) {
+}

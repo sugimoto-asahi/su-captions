@@ -8,3 +8,12 @@
     padding-left: var(--spectrum-spacing-200);
     padding-right: var(--spectrum-spacing-200);
 }
+
+.header {
+    font-weight: var(--spectrum-bold-font-weight);
+}
+
+.caption-rows {
+    /* for divider sizing */
+    position: relative;
+}
