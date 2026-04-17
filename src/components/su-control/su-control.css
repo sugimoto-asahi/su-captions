@@ -1,0 +1,15 @@
+:host {
+    cursor: pointer;
+}
+
+.icon-container {
+    fill: var(--spectrum-neutral-background-color-default);
+}
+
+.icon-container:hover {
+    fill: var(--spectrum-neutral-background-color-hover);
+}
+
+.icon-container:active {
+    fill: var(--spectrum-neutral-background-color-default);
+}

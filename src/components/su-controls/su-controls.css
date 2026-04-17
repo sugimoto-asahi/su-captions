@@ -1,0 +1,6 @@
+:host {
+    display: flex;
+    margin-top: var(--spectrum-spacing-100);
+    margin-bottom: var(--spectrum-spacing-100);
+    margin-left: var(--spectrum-spacing-100);
+}

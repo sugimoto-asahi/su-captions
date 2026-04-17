@@ -1,8 +1,9 @@
-import "@swc-uxp-internal/icons-workflow/icons/sp-icon-add-circle"
 import "@components/su-table"
 import "@components/su-table-row"
 import "@components/su-table-cell"
 import "@components/file-select"
+import "@components/su-control"
+import "@components/su-controls"
 
 // styles
 import "@components/su-theme"

@@ -11,6 +11,7 @@ import type { SuTableCell } from "@components/su-table-cell";
 import { widthStore } from "@core/width-store"
 import { trackListStore } from "@core/track-list-store"
 import { TrackSelectEvent } from "@components/menu-item";
+import { controlEventBus } from "@core/control-event-bus";
 
 
 
@@ -60,6 +61,24 @@ export class SuTable extends SuElement(styles) {
         widths: [100, 100, 100, 100]
       });
     })
+
+    // Subscribe to control actions fired from sibling <su-controls> via the bus
+    controlEventBus.subscribe("add-caption", () => {
+      this.handleAddCaption();
+    });
+    controlEventBus.subscribe("remove-caption", () => {
+      this.handleRemoveCaption();
+    });
+  }
+
+  private handleAddCaption(): void {
+    //TODO
+    console.log("add-caption");
+  }
+
+  private handleRemoveCaption(): void {
+    //TODO
+    console.log("remove-caption");
   }
 
   private loadTrack(trackName: string): void {
@@ -90,7 +109,7 @@ export class SuTable extends SuElement(styles) {
     trackListStore.set({ tracks });
   }
 
-  createRow(caption: Caption): SuTableRow {
+  private createRow(caption: Caption): SuTableRow {
     const row = document.createElement('su-table-row') as SuTableRow;
     const id = document.createElement('su-table-cell') as SuTableCell;
     const startTimecode = document.createElement('su-table-cell') as SuTableCell;
