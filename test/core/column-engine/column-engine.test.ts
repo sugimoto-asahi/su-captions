@@ -60,38 +60,59 @@ describe("isLastColumn", () => {
   });
 });
 
-describe("resize", () => {
+describe("resizeAbsolute", () => {
   it("updates the resized column's width", () => {
     const engine = new ColumnEngine(["a", "b", "c"], 300);
-    engine.resize("a", 50);
+    engine.resizeAbsolute("a", 50);
     expect(engine.getWidth("a")).toBe(50);
   });
 
   it("adjusts the right neighbour so the pair's total is preserved", () => {
     const engine = new ColumnEngine(["a", "b", "c"], 300);
-    engine.resize("a", 50);
+    engine.resizeAbsolute("a", 50);
     // a was 100, b was 100; a shrinks by 50, b gains 50
     expect(engine.getWidth("b")).toBe(150);
   });
 
   it("does not affect columns beyond the right neighbour", () => {
     const engine = new ColumnEngine(["a", "b", "c"], 300);
-    engine.resize("a", 50);
+    engine.resizeAbsolute("a", 50);
     expect(engine.getWidth("c")).toBe(100);
   });
 
   it("does not resize the last column", () => {
     const engine = new ColumnEngine(["a", "b", "c"], 300);
-    engine.resize("c", 50);
+    engine.resizeAbsolute("c", 50);
     expect(engine.getWidth("c")).toBe(100);
   });
 
   it("allows resizing a middle column", () => {
     const engine = new ColumnEngine(["a", "b", "c"], 300);
-    engine.resize("b", 50);
+    engine.resizeAbsolute("b", 50);
     expect(engine.getWidth("b")).toBe(50);
     expect(engine.getWidth("c")).toBe(150);
     expect(engine.getWidth("a")).toBe(100);
+  });
+});
+
+describe("resizeDelta", () => {
+  it("increases the width of a column by the specified delta", () => {
+    const engine = new ColumnEngine(["a", "b"], 200);
+    engine.resizeDelta("a", 50);
+    expect(engine.getWidth("a")).toBe(150);
+  });
+
+  it("decreases the width of a column by the specified delta", () => {
+    const engine = new ColumnEngine(["a", "b"], 200);
+    engine.resizeDelta("a", -50);
+    expect(engine.getWidth("a")).toBe(50);
+  });
+
+  it("does not change widths if delta is 0", () => {
+    const engine = new ColumnEngine(["a", "b"], 200);
+    engine.resizeDelta("a", 0);
+    expect(engine.getWidth("a")).toBe(100);
+    expect(engine.getWidth("b")).toBe(100);
   });
 });
 
@@ -113,7 +134,7 @@ describe("updateMaxWidth", () => {
 
   it("preserves relative proportions after a resize", () => {
     const engine = new ColumnEngine(["a", "b"], 200);
-    engine.resize("a", 50); // a=50, b=150
+    engine.resizeAbsolute("a", 50); // a=50, b=150
     engine.updateMaxWidth(400); // ratio 2×
     expect(engine.getWidth("a")).toBeCloseTo(100);
     expect(engine.getWidth("b")).toBeCloseTo(300);

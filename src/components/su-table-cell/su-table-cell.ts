@@ -1,8 +1,8 @@
 import { SuElement } from "@core/su-element";
 import styles from "./su-table-cell.css?inline";
 
-
 export class SuTableCell extends SuElement(styles) {
+  private name!: string;
   #element!: HTMLDivElement;
 
   override template() {
@@ -11,6 +11,14 @@ export class SuTableCell extends SuElement(styles) {
       <slot></slot>
     </div>
     `;
+  }
+
+  setName(name: string) {
+    this.name = name;
+  }
+
+  getName(): string {
+    return this.name;
   }
 
   override then(): void {

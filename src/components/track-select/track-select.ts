@@ -48,7 +48,6 @@ export class TrackSelect extends SuElement(styles) {
             current.textContent = e.detail.trackName;
             tracks.hidden = true;
         })
-
     }
 
     /**

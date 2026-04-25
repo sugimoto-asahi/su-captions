@@ -14,7 +14,14 @@
         <su-control icon="add"></su-control>
         <su-control icon="remove"></su-control>
       </su-controls>
-      <su-table></su-table>
+      <su-table>
+          <su-table-row slot="header">
+              <su-table-cell id="id">Id</su-table-cell>
+              <su-table-cell id="timecode-start">Timecode Start</su-table-cell>
+              <su-table-cell id="timecode-end">Timecode End</su-table-cell>
+              <su-table-cell id="caption">Caption</su-table-cell>
+          </su-table-row>
+      </su-table>
     </div>
   </su-theme>
 </body>

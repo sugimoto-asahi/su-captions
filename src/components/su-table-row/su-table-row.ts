@@ -11,16 +11,16 @@ import styles from "./su-table-row.css?inline";
  * This is not to be confused with the <slot> element.
  * 
  * SuTableRow does not control the spacing between each element.
- * 
+ *
  * The reason for this is that when column resizing is performed,
  * the parent SuTable component will calculate the new column widths
  * and propagate this information to all SuTableRows instead.
- * 
+ *
  * This way, each SuTableRow can maintain the exact same spacing between
  * each element.
  */
 export class SuTableRow extends SuElement(styles) {
-  cells!: NodeListOf<SuTableCell>;
+  private cells!: SuTableCell[];
   override connectedCallback(): void {
     super.connectedCallback();
   }
@@ -35,6 +35,18 @@ export class SuTableRow extends SuElement(styles) {
     this.cells = this.querySelectorAll('su-table-cell') as NodeListOf<SuTableCell>;
   }
 
+  /**
+   * Get a copy of the SuTableCell elements in this row
+   * @returns Array of SuTableCell elements
+   */
+  getCells(): SuTableCell[] {
+    return [...this.cells];
+  }
+
+  /**
+   * Set the widths of all SuTableCell elements in this row
+   * @param widths Array of widths to set
+   */
   setWidths(widths: number[]) {
     this.cells?.forEach((cell, index) => {
       cell.setWidth(widths[index]);

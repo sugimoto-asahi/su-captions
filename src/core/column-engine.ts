@@ -30,7 +30,6 @@ export class ColumnEngine {
   constructor(columns: string[], maxWidth: number) {
     const columnSet = new Set<string>();
     this.maxWidth = maxWidth;
-    this.columnCount = columns.length;
     this.columns = columns;
 
     // start each column with equal length
@@ -57,7 +56,7 @@ export class ColumnEngine {
   }
 
   /**
-   * Resize a column.
+   * Resize a column to an absolute number.
    * Let the column to be resized be LEFT and the column to the right of this
    * column be RIGHT.
    * RIGHT will resize itself as well such that width(LEFT) + width(RIGHT)
@@ -68,7 +67,7 @@ export class ColumnEngine {
    * @note The last column cannot be resized. Its size is always automatically
    * determined.
    */
-  resize(column: string, newWidth: number): void {
+  resizeAbsolute(column: string, newWidth: number): void {
     if (this.isLastColumn(column)) {
       return;
     }
@@ -79,6 +78,20 @@ export class ColumnEngine {
 
     this.columnMap.set(column, newWidth);
     this.columnMap.set(rightColumn, newRightWidth);
+  }
+
+  /**
+   * Resize a column by a delta amount.
+   *
+   * @param column Column to resize
+   * @param delta Amount to resize
+   */
+  resizeDelta(column: string, delta: number): void {
+    if (this.isLastColumn(column)) {
+      return;
+    }
+    const currentWidth = this.getWidth(column)!;
+    this.resizeAbsolute(column, currentWidth + delta);
   }
 
   /**
