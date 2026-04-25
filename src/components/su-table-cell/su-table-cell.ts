@@ -22,7 +22,7 @@ export class SuTableCell extends SuElement(styles) {
   }
 
   override then(): void {
-    this.#element = this.shadowRoot?.querySelector('.main') as HTMLDivElement;
+    this.#element = this.shadowRoot?.querySelector(".main") as HTMLDivElement;
   }
 
   setWidth(width: number) {
@@ -30,4 +30,4 @@ export class SuTableCell extends SuElement(styles) {
   }
 }
 
-customElements.define('su-table-cell', SuTableCell);
+customElements.define("su-table-cell", SuTableCell);

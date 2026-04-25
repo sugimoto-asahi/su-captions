@@ -1,5 +1,6 @@
 :host {
     display: flex;
+    padding: var(--spectrum-spacing-50);
 }
 
 .main {

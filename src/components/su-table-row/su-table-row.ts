@@ -2,14 +2,13 @@ import { SuElement } from "@core/su-element";
 import { SuTableCell } from "@components/su-table-cell";
 import styles from "./su-table-row.css?inline";
 
-
 /**
  * A single table row, contains a number of SuTableCells
  * Each table row has a number of slots, which each slot representing
  * an element in the table row.
- * 
+ *
  * This is not to be confused with the <slot> element.
- * 
+ *
  * SuTableRow does not control the spacing between each element.
  *
  * The reason for this is that when column resizing is performed,
@@ -32,7 +31,9 @@ export class SuTableRow extends SuElement(styles) {
   }
 
   override then(): void {
-    this.cells = this.querySelectorAll('su-table-cell') as NodeListOf<SuTableCell>;
+    this.cells = [
+      ...(this.querySelectorAll("su-table-cell") as NodeListOf<SuTableCell>),
+    ];
   }
 
   /**
@@ -48,10 +49,10 @@ export class SuTableRow extends SuElement(styles) {
    * @param widths Array of widths to set
    */
   setWidths(widths: number[]) {
-    this.cells?.forEach((cell, index) => {
+    this.cells.forEach((cell, index) => {
       cell.setWidth(widths[index]);
     });
   }
 }
 
-customElements.define('su-table-row', SuTableRow);
+customElements.define("su-table-row", SuTableRow);

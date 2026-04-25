@@ -6,7 +6,7 @@
  *   - Shadow DOM attachment
  *   - Associating CSS with the shadow DOM of the web component
  *   - Rendering the class as soon as it is added to the DOM
- *  
+ *
  *
  * Usage:
  *   import styles from './my-component.css?inline'; // Must be imported as raw string

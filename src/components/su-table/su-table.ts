@@ -1,22 +1,20 @@
 import { SuElement } from "@core/su-element";
 import type { SuTableRow } from "@components/su-table-row";
-import "@components/track-select"
+import "@components/track-select";
 
-import "@components/su-divider"
-import type { SuDivider } from "@components/su-divider";
+import "@components/su-divider";
+import { DividerMoveEvent, type SuDivider } from "@components/su-divider";
 
 import styles from "./su-table.css?inline";
 
-import { captionStore } from "@core/caption-store"
-import type { CaptionFile } from "@core/caption-file"
-import type { Caption } from "@core/caption"
+import { captionStore } from "@core/caption-store";
+import type { CaptionFile } from "@core/caption-file";
+import type { Caption } from "@core/caption";
 import type { SuTableCell } from "@components/su-table-cell";
-import { widthStore } from "@core/width-store"
-import { trackListStore } from "@core/track-list-store"
+import { trackListStore } from "@core/track-list-store";
 import { TrackSelectEvent } from "@components/menu-item";
 import { controlEventBus } from "@core/control-event-bus";
 import { ColumnEngine } from "@core/column-engine";
-
 
 interface Column {
   currentWidth: number;
@@ -108,6 +106,11 @@ export class SuTable extends SuElement(styles) {
       e.stopPropagation();
       this.showHeader();
       this.loadTrack(e.detail.trackName);
+
+      // // set initial widths
+      // widthStore.set({
+      //   widths: [100, 100, 100, 100],
+      // });
     });
 
     this.addEventListener(DividerMoveEvent.type, (event) => {
@@ -236,11 +239,15 @@ export class SuTable extends SuElement(styles) {
   }
 
   private createRow(caption: Caption): SuTableRow {
-    const row = document.createElement('su-table-row') as SuTableRow;
-    const id = document.createElement('su-table-cell') as SuTableCell;
-    const startTimecode = document.createElement('su-table-cell') as SuTableCell;
-    const endTimecode = document.createElement('su-table-cell') as SuTableCell;
-    const captionContent = document.createElement('su-table-cell') as SuTableCell;
+    const row = document.createElement("su-table-row") as SuTableRow;
+    const id = document.createElement("su-table-cell") as SuTableCell;
+    const startTimecode = document.createElement(
+      "su-table-cell",
+    ) as SuTableCell;
+    const endTimecode = document.createElement("su-table-cell") as SuTableCell;
+    const captionContent = document.createElement(
+      "su-table-cell",
+    ) as SuTableCell;
 
     id.textContent = "1";
     id.setName(this.headerNames.at(0)!);
@@ -262,4 +269,4 @@ export class SuTable extends SuElement(styles) {
   }
 }
 
-customElements.define('su-table', SuTable);
+customElements.define("su-table", SuTable);
