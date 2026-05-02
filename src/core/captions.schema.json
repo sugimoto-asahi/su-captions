@@ -36,6 +36,9 @@
             "type": "object",
             "description": "Single caption instance",
             "properties": {
+                "id": {
+                    "type": "integer"
+                },
                 "startTimecode": {
                     "$ref": "#/$defs/timecode"
                 },
@@ -47,6 +50,7 @@
                 }
             },
             "required": [
+                "id",
                 "startTimecode",
                 "endTimecode",
                 "content"
@@ -57,12 +61,25 @@
             "type": "object",
             "description": "SMPTE-style timecode",
             "properties": {
-                "hours": { "type": "integer" },
-                "minutes": { "type": "integer" },
-                "seconds": { "type": "integer" },
-                "frames": { "type": "integer" }
+                "hours": {
+                    "type": "integer"
+                },
+                "minutes": {
+                    "type": "integer"
+                },
+                "seconds": {
+                    "type": "integer"
+                },
+                "frames": {
+                    "type": "integer"
+                }
             },
-            "required": ["hours", "minutes", "seconds", "frames"],
+            "required": [
+                "hours",
+                "minutes",
+                "seconds",
+                "frames"
+            ],
             "additionalProperties": false
         }
     }

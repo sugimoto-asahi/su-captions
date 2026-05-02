@@ -4,8 +4,19 @@
             "name": "track-1",
             "captions": [
                 {
-                    "startTimecode": { "hours": 0, "minutes": 0, "seconds": 0, "frames": 0 },
-                    "endTimecode": { "hours": 0, "minutes": 0, "seconds": 5, "frames": 0 },
+                    "id": 0,
+                    "startTimecode": {
+                        "hours": 0,
+                        "minutes": 0,
+                        "seconds": 0,
+                        "frames": 0
+                    },
+                    "endTimecode": {
+                        "hours": 0,
+                        "minutes": 0,
+                        "seconds": 5,
+                        "frames": 0
+                    },
                     "content": "Hello, world!"
                 }
             ]

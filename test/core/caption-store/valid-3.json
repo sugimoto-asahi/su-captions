@@ -4,18 +4,51 @@
             "name": "english",
             "captions": [
                 {
-                    "startTimecode": { "hours": 0, "minutes": 0, "seconds": 0, "frames": 0 },
-                    "endTimecode": { "hours": 0, "minutes": 0, "seconds": 3, "frames": 15 },
+                    "id": 0,
+                    "startTimecode": {
+                        "hours": 0,
+                        "minutes": 0,
+                        "seconds": 0,
+                        "frames": 0
+                    },
+                    "endTimecode": {
+                        "hours": 0,
+                        "minutes": 0,
+                        "seconds": 3,
+                        "frames": 15
+                    },
                     "content": "Welcome to the presentation."
                 },
                 {
-                    "startTimecode": { "hours": 0, "minutes": 0, "seconds": 4, "frames": 0 },
-                    "endTimecode": { "hours": 0, "minutes": 0, "seconds": 8, "frames": 6 },
+                    "id": 1,
+                    "startTimecode": {
+                        "hours": 0,
+                        "minutes": 0,
+                        "seconds": 4,
+                        "frames": 0
+                    },
+                    "endTimecode": {
+                        "hours": 0,
+                        "minutes": 0,
+                        "seconds": 8,
+                        "frames": 6
+                    },
                     "content": "Today we will cover the basics."
                 },
                 {
-                    "startTimecode": { "hours": 0, "minutes": 0, "seconds": 9, "frames": 0 },
-                    "endTimecode": { "hours": 0, "minutes": 0, "seconds": 13, "frames": 0 },
+                    "id": 2,
+                    "startTimecode": {
+                        "hours": 0,
+                        "minutes": 0,
+                        "seconds": 9,
+                        "frames": 0
+                    },
+                    "endTimecode": {
+                        "hours": 0,
+                        "minutes": 0,
+                        "seconds": 13,
+                        "frames": 0
+                    },
                     "content": "Let's get started."
                 }
             ]
@@ -24,18 +57,51 @@
             "name": "japanese",
             "captions": [
                 {
-                    "startTimecode": { "hours": 0, "minutes": 0, "seconds": 0, "frames": 0 },
-                    "endTimecode": { "hours": 0, "minutes": 0, "seconds": 3, "frames": 15 },
+                    "id": 3,
+                    "startTimecode": {
+                        "hours": 0,
+                        "minutes": 0,
+                        "seconds": 0,
+                        "frames": 0
+                    },
+                    "endTimecode": {
+                        "hours": 0,
+                        "minutes": 0,
+                        "seconds": 3,
+                        "frames": 15
+                    },
                     "content": "プレゼンテーションへようこそ。"
                 },
                 {
-                    "startTimecode": { "hours": 0, "minutes": 0, "seconds": 4, "frames": 0 },
-                    "endTimecode": { "hours": 0, "minutes": 0, "seconds": 8, "frames": 6 },
+                    "id": 4,
+                    "startTimecode": {
+                        "hours": 0,
+                        "minutes": 0,
+                        "seconds": 4,
+                        "frames": 0
+                    },
+                    "endTimecode": {
+                        "hours": 0,
+                        "minutes": 0,
+                        "seconds": 8,
+                        "frames": 6
+                    },
                     "content": "今日は基本を説明します。"
                 },
                 {
-                    "startTimecode": { "hours": 0, "minutes": 0, "seconds": 9, "frames": 0 },
-                    "endTimecode": { "hours": 0, "minutes": 0, "seconds": 13, "frames": 0 },
+                    "id": 5,
+                    "startTimecode": {
+                        "hours": 0,
+                        "minutes": 0,
+                        "seconds": 9,
+                        "frames": 0
+                    },
+                    "endTimecode": {
+                        "hours": 0,
+                        "minutes": 0,
+                        "seconds": 13,
+                        "frames": 0
+                    },
                     "content": "それでは始めましょう。"
                 }
             ]
