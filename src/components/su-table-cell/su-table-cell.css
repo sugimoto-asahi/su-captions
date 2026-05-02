@@ -1,7 +1,15 @@
 :host {
     display: flex;
-    padding: var(--spectrum-spacing-50);
+    padding: var(--spectrum-spacing-100);
 }
 
 .main {
+}
+
+/* For some reason <textarea> has a hr selector with margin: 8px
+ * as per devtools, even though this isn't set anywhere in the project.
+ *
+ * Possibly a value set by the uxp runtime. In any case, we override it here. */
+textarea {
+    margin: 0px;
 }

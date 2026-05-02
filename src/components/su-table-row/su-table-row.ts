@@ -1,6 +1,28 @@
 import { SuElement } from "@core/su-element";
-import { SuTableCell } from "@components/su-table-cell";
+import {
+  CellContentChangedEvent,
+  SuTableCell,
+  type CellType,
+} from "@components/su-table-cell";
 import styles from "./su-table-row.css?inline";
+
+export interface RowContentChangedDetail {
+  id: string;
+  cellType: CellType;
+  content: string;
+}
+
+export class RowContentChangedEvent extends CustomEvent<RowContentChangedDetail> {
+  static readonly type = "row-content-changed" as const;
+
+  constructor(detail: RowContentChangedDetail) {
+    super(RowContentChangedEvent.type, {
+      detail,
+      bubbles: true,
+      composed: true,
+    });
+  }
+}
 
 /**
  * A single table row, contains a number of SuTableCells
@@ -20,6 +42,12 @@ import styles from "./su-table-row.css?inline";
  */
 export class SuTableRow extends SuElement(styles) {
   private cells!: SuTableCell[];
+  private captionId!: number;
+
+  setCaptionId(id: number) {
+    this.captionId = id;
+  }
+
   override connectedCallback(): void {
     super.connectedCallback();
   }
@@ -34,6 +62,18 @@ export class SuTableRow extends SuElement(styles) {
     this.cells = [
       ...(this.querySelectorAll("su-table-cell") as NodeListOf<SuTableCell>),
     ];
+
+    this.addEventListener(CellContentChangedEvent.type, (event) => {
+      const e = event as CellContentChangedEvent;
+      e.stopPropagation();
+      this.dispatchEvent(
+        new RowContentChangedEvent({
+          id: this.captionId,
+          cellType: e.detail.cellType,
+          content: e.detail.content,
+        }),
+      );
+    });
   }
 
   /**

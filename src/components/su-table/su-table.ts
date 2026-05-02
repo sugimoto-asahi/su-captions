@@ -1,5 +1,6 @@
 import { SuElement } from "@core/su-element";
 import type { SuTableRow } from "@components/su-table-row";
+import { RowContentChangedEvent } from "@components/su-table-row";
 import "@components/track-select";
 
 import "@components/su-divider";
@@ -130,6 +131,19 @@ export class SuTable extends SuElement(styles) {
       });
     });
 
+    this.addEventListener(RowContentChangedEvent.type, (event) => {
+      const e = event as RowContentChangedEvent;
+      e.stopPropagation();
+      console.log(
+        "id:",
+        e.detail.id,
+        "cellType:",
+        e.detail.cellType,
+        "content:",
+        e.detail.content,
+      );
+    });
+
     // Listen in on caption change events
     // These come from control buttons in SuControls
     controlEventBus.subscribe("add-caption", () => {
@@ -240,7 +254,7 @@ export class SuTable extends SuElement(styles) {
 
   private createRow(caption: Caption): SuTableRow {
     const row = document.createElement("su-table-row") as SuTableRow;
-    const id = document.createElement("su-table-cell") as SuTableCell;
+    const index = document.createElement("su-table-cell") as SuTableCell;
     const startTimecode = document.createElement(
       "su-table-cell",
     ) as SuTableCell;
@@ -249,17 +263,27 @@ export class SuTable extends SuElement(styles) {
       "su-table-cell",
     ) as SuTableCell;
 
-    id.textContent = "1";
-    id.setName(this.headerNames.at(0)!);
+    index.setName(this.headerNames.at(0)!);
     startTimecode.setName(this.headerNames.at(1)!);
     endTimecode.setName(this.headerNames.at(2)!);
     captionContent.setName(this.headerNames.at(3)!);
 
-    startTimecode.textContent = caption.startTimecode.toString();
-    endTimecode.textContent = caption.endTimecode.toString();
-    captionContent.textContent = caption.content;
+    index.setType("area");
+    startTimecode.setType("area");
+    endTimecode.setType("area");
+    captionContent.setType("area");
 
-    row.appendChild(id);
+    startTimecode.setCellType("startTimecode");
+    endTimecode.setCellType("endTimecode");
+    captionContent.setCellType("content");
+
+    index.setText("1");
+    startTimecode.setText(caption.startTimecode.toString());
+    endTimecode.setText(caption.endTimecode.toString());
+    captionContent.setText(caption.content);
+
+    row.setCaptionId(caption.id);
+    row.appendChild(index);
     row.appendChild(startTimecode);
     row.appendChild(endTimecode);
     row.appendChild(captionContent);
