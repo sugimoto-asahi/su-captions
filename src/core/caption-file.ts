@@ -20,6 +20,12 @@ export class TrackNotFoundError extends CaptionFileError {
     }
 }
 
+export class DuplicateIdError extends CaptionFileError {
+    constructor(id: number) {
+        super(`Duplicate caption id: ${id}`);
+    }
+}
+
 export type CaptionFileData = {
     tracks: CaptionTrackData[];
 };
