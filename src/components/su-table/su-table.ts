@@ -14,8 +14,9 @@ import type { Caption } from "@core/caption";
 import type { SuTableCell } from "@components/su-table-cell";
 import { trackListStore } from "@core/track-list-store";
 import { TrackSelectEvent } from "@components/menu-item";
-import { controlEventBus } from "@core/control-event-bus";
+import { AddCaptionDetail, controlEventBus } from "@core/control-event-bus";
 import { ColumnEngine } from "@core/column-engine";
+import { SuTableAdapter } from "@core/su-table-adapter";
 
 interface Column {
   currentWidth: number;
@@ -36,6 +37,15 @@ export class SuTable extends SuElement(styles) {
   private columnMap = new Map<string, Column>();
 
   private columnEngine!: ColumnEngine;
+
+  private rowCount: number = 1;
+
+  private adapter: SuTableAdapter;
+
+  constructor() {
+    super();
+    this.adapter = new SuTableAdapter(this);
+  }
 
   override template(): string {
     return `
@@ -134,22 +144,14 @@ export class SuTable extends SuElement(styles) {
     this.addEventListener(RowContentChangedEvent.type, (event) => {
       const e = event as RowContentChangedEvent;
       e.stopPropagation();
-      console.log(
-        "id:",
-        e.detail.id,
-        "cellType:",
-        e.detail.cellType,
-        "content:",
-        e.detail.content,
-      );
     });
 
     // Listen in on caption change events
     // These come from control buttons in SuControls
-    controlEventBus.subscribe("add-caption", () => {
-      this.handleAddCaption();
+    controlEventBus.subscribe("add-caption", (detail) => {
+      this.handleAddCaption(detail);
     });
-    controlEventBus.subscribe("remove-caption", () => {
+    controlEventBus.subscribe("remove-caption", (detail) => {
       this.handleRemoveCaption();
     });
 
@@ -208,15 +210,9 @@ export class SuTable extends SuElement(styles) {
     this.headerRow.style.display = "none";
   }
 
-  private handleAddCaption(): void {
-    //TODO
-    console.log("add-caption");
-  }
+  private handleAddCaption(detail: AddCaptionDetail): void {}
 
-  private handleRemoveCaption(): void {
-    //TODO
-    console.log("remove-caption");
-  }
+  private handleRemoveCaption(): void {}
 
   private loadTrack(trackName: string): void {
     const track = this.captionFile.getTrack(trackName);
@@ -250,6 +246,11 @@ export class SuTable extends SuElement(styles) {
   private loadCaptions(captions: CaptionFile): void {
     const tracks = captions.getTrackNames();
     trackListStore.set({ tracks });
+
+    // Get a list of all the caption ids
+    tracks.forEach((trackName) => {
+      const track = captions.getTrack(trackName);
+    });
   }
 
   private createRow(caption: Caption): SuTableRow {
@@ -268,16 +269,17 @@ export class SuTable extends SuElement(styles) {
     endTimecode.setName(this.headerNames.at(2)!);
     captionContent.setName(this.headerNames.at(3)!);
 
-    index.setType("area");
-    startTimecode.setType("area");
-    endTimecode.setType("area");
+    index.setType("div");
+    startTimecode.setType("div");
+    endTimecode.setType("div");
     captionContent.setType("area");
 
     startTimecode.setCellType("startTimecode");
     endTimecode.setCellType("endTimecode");
     captionContent.setCellType("content");
 
-    index.setText("1");
+    index.setText(String(this.rowCount));
+    ++this.rowCount;
     startTimecode.setText(caption.startTimecode.toString());
     endTimecode.setText(caption.endTimecode.toString());
     captionContent.setText(caption.content);

@@ -147,7 +147,8 @@ export default defineConfig({
     globals: true,
     alias: [
       { find: "@core/settings-store", replacement: path.resolve(import.meta.dirname, "./test/mock/settings-store.ts") },
-      { find: "uxp",            replacement: path.resolve(import.meta.dirname, "./test/mock/uxp.ts") },
+      { find: "@core/api",            replacement: path.resolve(import.meta.dirname, "./test/mock/api.ts") },
+      { find: "uxp",                  replacement: path.resolve(import.meta.dirname, "./test/mock/uxp.ts") },
     ],
     // silent: "passed-only"
   }

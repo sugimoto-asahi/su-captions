@@ -1,15 +1,14 @@
 import { EventBus } from "./event-bus";
-
+import { type Timecode } from "@core/timecode";
 
 export interface AddCaptionDetail {
-
+  startTimecode: Timecode;
+  endTimecode: Timecode;
 }
 
-export interface RemoveCaptionDetail {
+export interface RemoveCaptionDetail {}
 
-}
-
-class AddCaptionEvent extends CustomEvent<AddCaptionDetail> {
+export class AddCaptionEvent extends CustomEvent<AddCaptionDetail> {
   static readonly type = "add-caption" as const;
 
   constructor(detail: AddCaptionDetail) {
@@ -21,7 +20,7 @@ class AddCaptionEvent extends CustomEvent<AddCaptionDetail> {
   }
 }
 
-class RemoveCaptionEvent extends CustomEvent<RemoveCaptionDetail> {
+export class RemoveCaptionEvent extends CustomEvent<RemoveCaptionDetail> {
   static readonly type = "remove-caption" as const;
 
   constructor(detail: RemoveCaptionDetail) {
